@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>103 Project Extra Credit: Simulation of Monty Hall Problem</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  
+  <style type="text/css">
+  body 
+  {
+  	font-family:Gill Sans MT;
+  	color:#657b83;
+  	background-color:#fdf6e3;
+  	max-width:500pt;
+  	padding-left:25pt;
+  	padding-right:25pt;
+  	padding-bottom:20pt;
+  	margin:0 auto 0 auto;
+  	text-align:justify;
+  }
+  a:link {color:#6c71c4;}
+  a:visited {color:#859900;}
+  a:hover {color:#268bd2;}
+  a:active {color:#d33682;}
+  h1{}
+  h2{border-style:solid;
+   text-align:center;
+  }
+  h3
+  {
+  	margin-bottom:2pt;
+  	/*color:#268bd2;*/
+  	font-weight:bold;
+  }
+  strong
+  {
+  	color:#d33682;
+  	font-weight:bolder;
+  }
+  em
+  {
+  	color:#268bd2;
+  	font-style:italic;
+  	font-weight:bolder;
+  }
+  code
+  {
+      background-color:#eee8d5;
+      color:#586e75;
+  }
+  table.sourceCode
+  {
+      background-color:#eee8d5;
+      color:#586e75;
+  }
+  pre.sourceCode
+  {
+      background-color:#eee8d5;
+      color:#586e75;
+  }
+  .math
+  {
+      /*background-color:#eee8d5;*/
+      color:#586e75;
+      font-family:Times New Roman;
+  }
+  /*use a contextual style to undo the blue-ness:*/
+  .math em
+  {
+      color:#586e75;
+  	font-weight:normal;
+  }
+  .descrip
+  {
+  	max-width:500pt;
+  	padding-left:25pt;
+  	text-align:justify;
+  }
+  .descripbig
+  {
+  	max-width:575pt;
+  	padding-left:0pt;
+  	text-align:justify;
+  }
+  .emph
+  {
+  	color:#d33682;
+  	font-weight:bolder;
+  }
+  .litem
+  {
+  	color:#268bd2;
+  	font-style:italic;
+  	font-weight:bolder;
+  }
+  .hl
+  {
+  	color:#268bd2;
+  	font-style:italic;
+  }
+  .required
+  {
+  	color:#268bd2;
+  	font-style:italic;
+  	font-weight:bold;
+  }
+  .inputbox
+  {
+  	background-color:#eee8d5;
+  	color:#586e75;
+  	font-family:Gill Sans MT;
+  	font-weight:bolder;
+  }
+  </style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">103 Project Extra Credit: Simulation of Monty Hall Problem</h1>
+</div>
+<h2 id="due-tuesday-may-19th-1159pm"><em>Due:</em> Tuesday, May 19th @ 11:59pm</h2>
+<h2 id="introduction">Introduction</h2>
+<p>In this project you will write C++ code that simulates playing a game a number of times. In this game the player is presented with three doors. One of the doors contains a prize and the other two do not.</p>
+<p>The player is asked to first pick one of the three doors. What makes this game interesting is that a game host then opens one of the two doors the player did not pick, always a losing door. The player is then given the choice to stay with their original pick, or switch to the remaining unopened door.</p>
+<p>What your code will do for each game, is tally whether the player wins by staying with their original choice, or by switching doors. At the end of the simulation we will know which strategy provided the best odds of winning.</p>
+<p>In this project you will learn about:</p>
+<ul>
+<li>Using the <code>rand()</code> function</li>
+<li>Simulations</li>
+</ul>
+<h2 id="important-notes-on-grading">Important Notes on Grading</h2>
+<ul>
+<li>Code that does not compile will receive a 0.</li>
+<li>Files that are not properly named will receive a 0. (See the section below on the <a href="#submission-procedure">submission procedure</a>.)</li>
+</ul>
+<h2 id="history">History</h2>
+<p>The game was originally described by Steve Selvin in a letter to American Statistician in 1975. And became famous as a reader question to Marilyn vos Savant at Parade magazine in 1990. It was quoted as follows:</p>
+<blockquote>
+<p>Suppose you're on a game show, and you're given the choice of three doors: Behind one door is a car; behind the others, goats. You pick a door, say No. 1, and the host, who knows what's behind the doors, opens another door, say No. 3, which has a goat. He then says to you, &quot;Do you want to pick door No. 2?&quot; Is it to your advantage to switch your choice?</p>
+</blockquote>
+<p>The game gets its name from a TV game show host, Monty Hall, who hosted the show Let's Make a Deal.</p>
+<p>You can read tons more about it at <a href="http://en.wikipedia.org/wiki/Monty_Hall_problem">Wikipedia</a>, which includes various solutions.</p>
+<h2 id="details">Details</h2>
+<p>For this assignment, we assume we are playing a fair game, such that the each of the 3 doors has a 1/3 chance at being picked as the winning door.</p>
+<p>You can use the <code>rand()</code> function to run your simulation and assume that it provides numbers from a uniform distribution. Don't forget to call <code>srand(time(0))</code> to seed the random number generator.</p>
+<p>(Note that <code>rand()</code> is fine for our class purpose, but in general should not be used in production code)</p>
+<p>Your output should look as follows:</p>
+<pre class="sourceCode latex"><code class="sourceCode latex">====================
+Game 1
+Winning door: 1
+Player picks: 1
+Host opens door: 3
+
+If you stay: Win
+If you switch: Lose
+====================
+Game 2
+Winning door: 1
+Player picks: 3
+Host opens door: 2
+
+If you stay: Lose
+If you switch: Win
+====================
+Game 3
+Winning door: 3
+Player picks: 2
+Host opens door: 1
+
+If you stay: Lose
+If you switch: Win
+====================
+Game 4
+Winning door: 1
+Player picks: 1
+Host opens door: 3
+
+If you stay: Win
+If you switch: Lose
+====================
+Game 5
+Winning door: 2
+Player picks: 3
+Host opens door: 1
+
+If you stay: Lose
+If you switch: Win
+====================
+Game 6
+Winning door: 1
+Player picks: 3
+Host opens door: 2
+
+If you stay: Lose
+If you switch: Win
+====================
+Game 7
+Winning door: 2
+Player picks: 2
+Host opens door: 3
+
+If you stay: Win
+If you switch: Lose
+====================
+Game 8
+Winning door: 2
+Player picks: 1
+Host opens door: 3
+
+If you stay: Lose
+If you switch: Win
+====================
+Game 9
+Winning door: 1
+Player picks: 2
+Host opens door: 3
+
+If you stay: Lose
+If you switch: Win
+====================
+Game 10
+Winning door: 1
+Player picks: 3
+Host opens door: 2
+
+If you stay: Lose
+If you switch: Win
+
+====================
+Total wins when staying: 3 a wining chance of 30<span class="co">%</span>
+Total wins when switching: 7 a wining chance of 70<span class="co">%</span></code></pre>
+<p>In this example the game was simulated 10 times. When you test your program, run it for 1000 or more games.</p>
+<h2 id="testing">Testing:</h2>
+<p>There is no script this time. Since we are simulating a random event, the answer will not be the same every time. Instead, you will know you are correct if the strategy of switching is close to winning 66.7% of the time and staying is close to 33.3% of the time.</p>
+<p>You will also have to check the output. The host should never open the winning door, or the door that the user has picked.</p>
+<h2 id="submission-procedure">Submission Procedure</h2>
+<p>Turn your assignment in <a href="http://ccvcl.org/~molina/CS103/upload.html">here</a>. A few <strong>important notes:</strong></p>
+<ul>
+<li><em>Save the receipt.</em> You will need this to get your homework score back later! The easiest thing to do is just save the page (Ctrl-S in firefox).</li>
+<li><em>Don't change the filename.</em> Just edit and submit the file from the repository (in this case <code>monty.cpp</code>). If you turn a file with a different name, it will not be graded.</li>
+<li><em>Respect the deadline.</em> Turning in homework past the deadline will be noticed, and may lead to a zero.</li>
+</ul>
+<!--  links  -->
+</body>
+</html>
